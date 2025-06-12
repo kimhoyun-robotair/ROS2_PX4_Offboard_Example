@@ -191,7 +191,7 @@ class OffboardControl(Node):
 
     # Takes off the vehicle to a user specified altitude (meters)
     def take_off(self):
-        self.publish_vehicle_command(VehicleCommand.VEHICLE_CMD_NAV_TAKEOFF, param1 = 1.0, param7=5.0) # param7 is altitude in meters
+        self.publish_vehicle_command(VehicleCommand.VEHICLE_CMD_NAV_TAKEOFF, param1 = 1.0, param7=1.8) # param7 is altitude in meters
         self.get_logger().info("Takeoff command send")
 
     #publishes command to /fmu/in/vehicle_command
@@ -256,7 +256,7 @@ class OffboardControl(Node):
             # Publish offboard control modes
             offboard_msg = OffboardControlMode()
             offboard_msg.timestamp = int(Clock().now().nanoseconds / 1000)
-            offboard_msg.position = False
+            offboard_msg.position = True
             offboard_msg.velocity = True
             offboard_msg.acceleration = False
             self.publisher_offboard_mode.publish(offboard_msg)            
@@ -275,7 +275,7 @@ class OffboardControl(Node):
             trajectory_msg.velocity[2] = self.velocity.z
             trajectory_msg.position[0] = float('nan')
             trajectory_msg.position[1] = float('nan')
-            trajectory_msg.position[2] = float('nan')
+            trajectory_msg.position[2] = -1.8
             trajectory_msg.acceleration[0] = float('nan')
             trajectory_msg.acceleration[1] = float('nan')
             trajectory_msg.acceleration[2] = float('nan')
